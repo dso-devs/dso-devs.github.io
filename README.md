@@ -20,4 +20,4 @@ This command generates static content into the `build` directory and can be serv
 
 ## Deployment
 
-Deployment is done by [GitHub Actions](https://github.com/dso-devs/dso-devs.github.io/actions). All code in the `main` branch is automatically deployed using [GitHub Actions](https://github.com/dso-devs/dso-devs.github.io/actions).
+All code in the `main` branch is automatically deployed using [GitHub Actions](https://github.com/dso-devs/dso-devs.github.io/actions).
