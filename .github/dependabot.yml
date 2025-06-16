@@ -3,8 +3,23 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
+    open-pull-requests-limit: 99
+    groups:
+      # All official @docusaurus/* packages should have the exact same version as @docusaurus/core.
+      # From https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#groups:
+      # "You cannot apply a single grouping set of rules to both version updates and security
+      # updates [...] you must define two, separately named, grouping sets of rules"
+      docusaurus-version-updates:
+        applies-to: version-updates
+        patterns:
+          - '@docusaurus/*'
+      docusaurus-security-updates:
+        applies-to: security-updates
+        patterns:
+          - '@docusaurus/*'
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
+    open-pull-requests-limit: 99
