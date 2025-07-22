@@ -62,7 +62,7 @@ const config: Config = {
       title: 'DSO Dev2Dev Portaal',
       logo: {
         alt: 'DSO Dev2Dev Portaal',
-        src: 'img/logo.svg',
+        src: 'img/logo.png',
       },
       items: [
         {
