@@ -123,7 +123,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} DSO-LV | OSvD | TBO Kadaster`,
+      copyright: `Copyright © ${new Date().getFullYear()} DSO-LV | OSvD | TBO Kadaster - alle rechten voorbehouden`,
     },
     prism: {
       theme: prismThemes.github,
