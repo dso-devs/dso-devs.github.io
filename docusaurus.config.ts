@@ -3,7 +3,7 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: 'DSO Dev2Dev',
+  title: 'DSO Dev2Dev Portaal',
   tagline: 'Documentatie voor Ontwikkelaars',
   favicon: 'img/favicon.ico',
 
@@ -59,9 +59,9 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'DSO Dev2Dev',
+      title: 'DSO Dev2Dev Portaal',
       logo: {
-        alt: 'My Site Logo',
+        alt: 'DSO Dev2Dev Portaal',
         src: 'img/logo.svg',
       },
       items: [
@@ -69,9 +69,9 @@ const config: Config = {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
           position: 'left',
-          label: 'Tutorial',
+          label: 'Docs',
         },
-        {to: '/blog', label: 'Blog', position: 'left'},
+        {to: '/blog', label: 'Updates', position: 'left'},
         {
           href: 'https://github.com/dso-devs/dso-devs.github.io',
           label: 'GitHub',
@@ -91,7 +91,7 @@ const config: Config = {
           title: 'Docs',
           items: [
             {
-              label: 'Tutorial',
+              label: 'Docs',
               to: '/docs/intro',
             },
           ],
@@ -109,7 +109,7 @@ const config: Config = {
           title: 'More',
           items: [
             {
-              label: 'Blog',
+              label: 'Updates',
               to: '/blog',
             },
             {
