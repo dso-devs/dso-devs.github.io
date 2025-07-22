@@ -4,7 +4,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'DSO Dev2Dev',
-  tagline: 'Documentatie voor ontwikkelaars',
+  tagline: 'Documentatie voor Ontwikkelaars',
   favicon: 'img/favicon.ico',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
@@ -123,7 +123,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} DSO Devs. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} DSO-LV | OSvD | TBO Kadaster`,
     },
     prism: {
       theme: prismThemes.github,

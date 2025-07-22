@@ -11,32 +11,29 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Easy to Use',
+    title: 'Direct aan de slag',
     Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+       Geen dikke handboeken of complexe opstarttrajecten op het DSO: dit portaal is ontworpen om jou als ontwikkelaar razendsnel op weg te helpen. Kies je API, kopieer de codevoorbeelden en ga snel aan de slag. Zo bouw je in no-time je eigen viewer, service of integratie!
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
+    title: 'Focus op jouw oplossing',
     Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+         Je zit niet te wachten op PDF&apos;s of eindeloze handleidingen. Daarom vind je hier alleen wat echt nodig is: snelle toegang tot specs, endpoints, code snippets en samenhang tussen de DSO API&apos;s &ndash; direct bruikbaar in jouw eigen stack
       </>
     ),
   },
   {
-    title: 'Powered by React',
+    title: 'Voor Developers, door Developers',
     Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Dit portaal is open source, GitHub-first en gebouwd op React. Geen vendor lock-ins, geen marketing. Gewoon: technische documentatie in Markdown, pull requests welkom. Net als jij houden we niet van poespas &ndash; maar wel van clean code.
       </>
     ),
   },
