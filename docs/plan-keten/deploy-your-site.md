@@ -2,7 +2,7 @@
 sidebar_position: 5
 ---
 
-# Deploy your site
+# Ruimtelijke Plannen
 
 Docusaurus is a **static-site-generator** (also called **[Jamstack](https://jamstack.org/)**).
 

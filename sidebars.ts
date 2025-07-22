@@ -24,7 +24,7 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Docs',
-      items: ['tutorial-basics/create-a-document'],
+      items: ['plan-keten/create-a-document'],
     },
   ],
    */

@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# Introductie Dev2Dev Portaal
 
 Let's discover **Docusaurus in less than 5 minutes**. Super leuk!
 

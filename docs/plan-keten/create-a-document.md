@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Create a Document
+# Omgevingsinformatie
 
 Documents are **groups of pages** connected through:
 
@@ -50,7 +50,7 @@ export default {
     {
       type: 'category',
       label: 'Docs',
-      items: ['tutorial-basics/create-a-document'],
+      items: ['plan-keten/create-a-document'],
     },
   ],
 };

@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Translate your site
+# Samenhang tussen VTH-keten APIs
 
 Let's translate `docs/intro.md` to French.
 
