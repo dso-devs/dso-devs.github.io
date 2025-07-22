@@ -3,8 +3,8 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: 'DSO Dev2Dev Portaal',
-  tagline: 'Documentatie voor Ontwikkelaars',
+  title: 'DSO Dev2Dev Ontwikkelaars Portaal',
+  tagline: 'Documentatie voor (en door) Ontwikkelaars',
   favicon: 'img/favicon.ico',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
