@@ -12,7 +12,7 @@ type FeatureItem = {
 const FeatureList: FeatureItem[] = [
   {
     title: 'Direct aan de slag',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    Svg: require('@site/static/img/dso-dev2dev1.svg').default,
     description: (
       <>
        Geen dikke handboeken of complexe opstarttrajecten op het DSO: dit portaal is ontworpen om jou als ontwikkelaar razendsnel op weg te helpen. Kies je API, kopieer de codevoorbeelden en ga snel aan de slag. Zo bouw je in no-time je eigen viewer, service of integratie!
@@ -21,7 +21,7 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: 'Focus op jouw oplossing',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    Svg: require('@site/static/img/dso-dev2dev2.svg').default,
     description: (
       <>
          Je zit niet te wachten op PDF&apos;s of eindeloze handleidingen. Daarom vind je hier alleen wat echt nodig is: snelle toegang tot specs, endpoints, code snippets en samenhang tussen de DSO API&apos;s &ndash; direct bruikbaar in jouw eigen stack
@@ -30,7 +30,7 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: 'Voor Developers, door Developers',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    Svg: require('@site/static/img/dso-dev2dev3.svg').default,
     description: (
       <>
         Dit portaal is open source, GitHub-first en gebouwd op React. Geen vendor lock-ins, geen marketing. Gewoon: technische documentatie in Markdown, pull requests welkom. Net als jij houden we niet van poespas &ndash; maar wel van clean code.
