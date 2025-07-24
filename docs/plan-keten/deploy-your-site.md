@@ -2,7 +2,7 @@
 sidebar_position: 5
 ---
 
-# Ruimtelijke Plannen
+# Omgevingsdocument Presenteren API (v8)
 
 Docusaurus is a **static-site-generator** (also called **[Jamstack](https://jamstack.org/)**).
 

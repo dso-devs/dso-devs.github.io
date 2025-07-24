@@ -42,7 +42,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Override Infima footer colors for dark mode */
 .footer {
-  --ifm-footer-background-color: #294a32 !important;
+  --ifm-footer-background-color: #0f2413 !important;
   --ifm-footer-color: #ffffff !important;
   --ifm-footer-link-color: #ffffff !important;
   --ifm-footer-title-color: #ffffff !important;
