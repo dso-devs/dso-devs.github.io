@@ -34,7 +34,6 @@ const config: Config = {
           sidebarPath: './sidebars.ts',
           editUrl:
             'https://github.com/dso-devs/dso-devs.github.io/tree/main/',
-          remarkPlugins: [require('remark-mermaid')],
         },
         blog: {
           showReadingTime: true,
