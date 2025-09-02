@@ -1,0 +1,12 @@
+flowchart LR
+S(["Start"])
+S --> OIS["Omgevingsinformatie Ontsluiten API"]
+OIS --> Domein{"Uit welk domein komt het document?"}
+Domein --> |WRO| RP["Ruimtelijke Plannen Opvragen API"]
+Domein --> |Omgevingswet| Ozon["Omgevingsdocumenten Presenteren API"]
+Ozon --> OzonVerbeelden{"Bron-geometrie of verbeelding op de kaart?"}
+OzonVerbeelden -->|Verbeelding op de kaart| VT["OGC API Vector Tiles (PDOK)"]
+OzonVerbeelden --> |Bron-geometrie| Geo["Omgevingsdocumenten Geometrie Opvragen API"]
+RP --> RpVerbeelden{"Bron-geometrie of verbeelding op de kaart?"}
+RpVerbeelden --> |Bron-geometrie| RP
+RpVerbeelden -->|Verbeelding op de kaart| VT["OGC API Vector Tiles (PDOK)"]
