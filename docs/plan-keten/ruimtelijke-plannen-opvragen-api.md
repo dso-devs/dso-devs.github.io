@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 5
 id: ruimtelijke-plannen-opvragen-api
 title: Ruimtelijke Plannen Opvragen API
 slug: /plan-keten/ruimtelijke-plannen-opvragen-api

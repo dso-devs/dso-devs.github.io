@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 3
 id: samenhang-vth-keten-apis
 title: Samenhang tussen VTH-keten APIs
 slug: /vth-keten/samenhang-vth-keten-apis

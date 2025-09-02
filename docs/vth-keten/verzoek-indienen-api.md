@@ -1,8 +1,8 @@
 ---
-sidebar_position: 11
-id: verzoek-indienen
+sidebar_position: 9
+id: verzoek-indienen-api
 title: Verzoek indienen API
-slug: /vth-keten/verzoek-indienen
+slug: /vth-keten/verzoek-indienen-api
 ---
 
 # Verzoek indienen API

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 id: samenhang-plan-keten-apis
 title: Samenhang tussen Plan-Keten APIs
 slug: /plan-keten/samenhang-plan-keten-apis
@@ -16,7 +16,7 @@ Ten bate van de bedrijfsfuncties van DSO-LV biedt de OBO Kadaster een aantal RES
 # Overview
 
 ```mermaid
-flowchart LR
+flowchart TD
 S(["Start"])
 S --> OIS["Omgevingsinformatie Ontsluiten API"]
 OIS --> Domein{"Uit welk domein komt het document?"}

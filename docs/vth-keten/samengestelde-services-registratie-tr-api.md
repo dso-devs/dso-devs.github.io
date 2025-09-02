@@ -1,8 +1,8 @@
 ---
-sidebar_position: 8
-id: samengestelde-services-registratie-tr
+sidebar_position: 6
+id: samengestelde-services-registratie-tr-api
 title: Samengestelde services Registratie Toepasbare Regels API
-slug: /vth-keten/samengestelde-services-registratie-tr
+slug: /vth-keten/samengestelde-services-registratie-tr-api
 ---
 
 # Samengestelde services Registratie Toepasbare Regels API

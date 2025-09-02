@@ -1,5 +1,5 @@
 ---
-sidebar_position: 6
+sidebar_position: 7
 id: omgevingsdocumenten-geometrie-opvragen-api
 title: Omgevingsdocumenten Geometrie Opvragen API
 slug: /plan-keten/omgevingsdocumenten-geometrie-opvragen-api

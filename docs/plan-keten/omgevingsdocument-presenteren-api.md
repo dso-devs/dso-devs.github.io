@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 6
 id: omgevingsdocument-presenteren-api
 title: Omgevingsdocument Presenteren API (v8)
 slug: /plan-keten/omgevingsdocument-presenteren-api

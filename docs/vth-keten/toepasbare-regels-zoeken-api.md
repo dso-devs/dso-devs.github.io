@@ -1,8 +1,8 @@
 ---
-sidebar_position: 9
-id: toepasbare-regels-zoeken
+sidebar_position: 7
+id: toepasbare-regels-zoeken-api
 title: Toepasbare regels zoeken API
-slug: /vth-keten/toepasbare-regels-zoeken
+slug: /vth-keten/toepasbare-regels-zoeken-api
 ---
 
 # Toepasbare regels zoeken API
