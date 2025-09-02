@@ -7,6 +7,7 @@ slug: /plan-keten/samenhang-plan-keten-apis
 
 # Samenhang tussen Plan-Keten APIs
 
+
 Ten bate van de bedrijfsfuncties van DSO-LV biedt de OBO Kadaster een aantal REST API's aan. Voor bepaalde use cases zijn deze API's op zichzelf bruikbaar, maar vaker nog zijn er meerdere API's nodig om tot een antwoord op je vraag te komen. Vandaar dat in dit document kort ingegaan wordt op de samenhang tussen, in het bijzonder, de volgende REST API's:
 1. Omgevingsinformatie Ontsluiten API
 2. Ruimtelijke Plannen Opvragen API
@@ -14,6 +15,8 @@ Ten bate van de bedrijfsfuncties van DSO-LV biedt de OBO Kadaster een aantal RES
 4. Omgevingsdocumenten Geometrie Opvragen API
 
 # Overview
+
+-----Toelichtings-tekst - Nader in te vullen-----
 
 ```mermaid
 flowchart TD
@@ -32,8 +35,10 @@ RpVerbeelden -->|Verbeelding op de kaart| VT["OGC API Vector Tiles (PDOK)"]
 
 # Omgevingsinformatie Ontsluiten
 
+-----Toelichtings-tekst - Nader in te vullen-----
+
 ```mermaid
-flowchart LR
+flowchart TD
 S(["Start"]) --> Begin
 
 subgraph OIS[Omgevingsinformatie Ontsluiten API]
@@ -50,8 +55,10 @@ Domein --> |Omgevingswet| Ozon["Omgevingsdocumenten Presenteren API"]
 
 # Ruimtelijke Plannen
 
+-----Toelichtings-tekst - Nader in te vullen-----
+
 ```mermaid
-flowchart LR
+flowchart TD
 OIS["Omgevingsinformatie Ontsluiten API"]
 OIS --> Plannen
 subgraph RP[Ruimtelijke Plannen Opvragen API]
@@ -68,8 +75,10 @@ RpVerbeelden -->|Verbeelding op de kaart| VT["OGC API Vector Tiles (PDOK)"]
 
 # Omgevingsdocumenten Presenteren
 
+-----Toelichtings-tekst - Nader in te vullen-----
+
 ```mermaid
-flowchart LR
+flowchart TD
 OIS["Omgevingsinformatie Ontsluiten API"]
 OIS --> Type
 subgraph Ozon[Omgevingsdocumenten Presenteren API]
