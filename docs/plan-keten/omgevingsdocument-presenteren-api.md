@@ -1,5 +1,8 @@
 ---
 sidebar_position: 5
+id: omgevingsdocument-presenteren-api
+title: Omgevingsdocument Presenteren API (v8)
+slug: /plan-keten/omgevingsdocument-presenteren-api
 ---
 
 # Omgevingsdocument Presenteren API (v8)
