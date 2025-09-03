@@ -1,8 +1,6 @@
 {
   "label": "Docs | Plan-Keten",
-  "position": 2,
-  "link": {
-    "type": "generated-index",
-    "description": "5 minutes to learn the most important Docusaurus concepts."
-  }
+  "position": 1,
+  "collapsible": true,
+  "collapsed": false
 }
