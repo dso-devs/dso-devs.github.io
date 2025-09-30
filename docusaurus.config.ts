@@ -78,13 +78,13 @@ const config: Config = {
         },
         {to: '/blog', label: 'Updates', position: 'left'},
         {
-          href: 'https://github.com/dso-devs/dso-devs.github.io',
-          label: 'GitHub',
+          href: 'https://developer.omgevingswet.overheid.nl',
+          label: 'Ontwikkelaarsportaal',
           position: 'right',
         },
         {
-          href: 'https://omgevingswet.overheid.nl/home',
-          label: 'Omgevingsloket',
+          href: 'https://github.com/dso-devs/dso-devs.github.io',
+          label: 'Dev2Dev op GitHub',
           position: 'right',
         },
       ],
