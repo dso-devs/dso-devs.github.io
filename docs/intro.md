@@ -13,7 +13,7 @@ We schrijven beknopt, to-the-point en klaar voor productie. Waar het officiële 
 - **Work in progress**: We rollen dit portaal gefaseerd uit: we starten met vier kern-API’s in de plan-keten, die we ook in hun onderlinge samenhang beschrijven. Daarna breiden we uit naar de VTH-keten.
 - E2E-guides voor veelgebruikte flows, inclusief test- vs prod-tips
 - Auth & security-praktijken conform de DSO-LV [API/URI-strategie](https://iplo.nl/digitaal-stelsel/aansluiten/standaarden/api-en-uri-strategie) en NL API-richtlijnen
-- Werkende code-snippets (PROGRAMMEERTALEN?), foutafhandeling en versiebeheer-adviezen
+- Werkende code-snippets, foutafhandeling en versiebeheer-adviezen
 - Richtlijnen voor consistente naming, payloads en error-formats (met verwijzingen naar bronstandaarden)
 
 ## Waarom dit portaal? 
