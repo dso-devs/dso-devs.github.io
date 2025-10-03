@@ -25,7 +25,7 @@ De Omgevingsinformatie ontsluiten-API ontsluit omgevingsinformatie uit meerdere 
 
 ## Quick Start
 
-### 1) Zoeken met filters of locatie
+### 1️⃣ Zoeken met filters of locatie
 
 **Endpoint:** `/documenten/_zoek`  
 Geeft een **gepagineerde** lijst met omgevingsdocumenten en IMRO-documenten terug.
@@ -49,7 +49,7 @@ curl --request POST \
   'https://service.omgevingswet.overheid.nl/publiek/omgevingsinformatie/api/ontsluiten/v2/documenten/_zoek?page=1&size=20&sort=sortDatum,desc'
 ~~~
 
-### 2) Zoeken met suggesties
+### 2️⃣ Zoeken met suggesties
 
 **Endpoint:** `/documenten/_suggereer`  
 Zoekt op basis van een (on)volledige zoekterm naar omgevingsdocumenten of IMRO-documenten; zoekt op zowel exacte als ‘fuzzy’ overeenkomsten.  
@@ -64,7 +64,7 @@ curl --request GET \
 
 _Resultaat:_ lijst met matches; geen paginering. Limiteren kan met de `limit`-parameter.
 
-### 3) Details op identificatie
+### 3️⃣ Details op identificatie
 
 **Endpoint:** `/documenten/{uriIdentificatie}`  
 Levert aanvullende, meer uitgebreide (meta-)informatie over één omgevingsdocument of IMRO-document.  
@@ -84,7 +84,7 @@ curl --request GET \
   'https://service.omgevingswet.overheid.nl/publiek/omgevingsinformatie/api/ontsluiten/v2/documenten/_akn_nl_act_gm0772_2020_omgevingsplan?geldigOp=2024-11-27&beschikbaarOp=2024-11-27T12:34:56Z'
 ~~~
 
-### 4) Versie-details op `expressionId`
+### 4️⃣ Versie-details op `expressionId`
 
 **Endpoint:** `/omgevingsdocumentversies/{expressionId}`  
 Gebruikt `uriExpressionId` (ge-escapete versie van `expressionId`); escaping met regex `[^\w]+` (alle non-alfanumerieke tekens, waaronder `/`, `@`, `-`, `;`) → `_`. Bij gebruik van een `expressionId` van een tijdelijk deel bepaalt `beschikbaarVanaf` van dat tijdelijke deel welke versie van de hoofdregeling wordt teruggeleverd. De selectie van de hoofdregeling is **uitsluitend gebaseerd op beschikbaarheid**, niet op geldigheid.
