@@ -9,8 +9,8 @@ slug: /plan-keten/omgevingsinformatie-ontsluiten-api
 
 De Omgevingsinformatie ontsluiten-API ontsluit omgevingsinformatie uit meerdere bronnen in samenhang.
 
-:::note Status
-Let op: deze API is nog in ontwikkeling en moet beschouwd worden als **bèta**.
+:::caution
+**Let op** deze API is nog in ontwikkeling en moet beschouwd worden als **bèta**.
 :::
 
 ## Omgevingen & basis-URLs
