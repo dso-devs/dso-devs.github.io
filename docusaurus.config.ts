@@ -18,9 +18,12 @@ const config: Config = {
   organizationName: 'dso-devs', // Usually your GitHub org/user name.
   projectName: 'dso-devs.github.io', // Usually your repo name.
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
   trailingSlash: false,
   markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+      onBrokenMarkdownImages: 'throw',
+    },
     mermaid: true,
   },
 
