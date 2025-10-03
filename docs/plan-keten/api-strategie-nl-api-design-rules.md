@@ -1,5 +1,5 @@
 ---
-sidebar_position: 8
+sidebar_position: 3
 id: api-strategie-nl-api-design-rules
 title: DSO-LV API-strategie ↔ NL API Design Rules
 slug: /plan-keten/api-strategie-nl-api-design-rules

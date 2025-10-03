@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 2
 id: samenhang-plan-keten-apis
 title: Samenhang tussen Plan-Keten APIs
 slug: /plan-keten/samenhang-plan-keten-apis
