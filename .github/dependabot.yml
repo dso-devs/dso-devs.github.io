@@ -18,6 +18,14 @@ updates:
         applies-to: security-updates
         patterns:
           - '@docusaurus/*'
+      react-version-updates:
+        applies-to: version-updates
+        patterns:
+          - 'react*'
+      react-security-updates:
+        applies-to: security-updates
+        patterns:
+          - 'react*'
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
