@@ -46,9 +46,21 @@ RpVerbeelden --> |Bron-geometrie| RP
 RpVerbeelden -->|Verbeelding op de kaart| VT["OGC API Vector Tiles (PDOK)"]
 ```
 
+Hierbij is het relevant wat je als afnemer wilt doen met de geometrie.
+Wil je deze verbeelden, bijvoorbeeld om een kaartbeeld te tonen in een browser,
+dan is het verstandig om de OGC API Vector Tiles te gebruiken.
+Wil je zelf beschikking hebben over de bron-geometrie, bijvoorbeeld omdat je hier
+databewerking op wilt doen, dan is het verstandig om geometrieën (GeoJSON)
+op te halen uit de Ruimtelijke Plannen Opvragen API of de Omgevingsdocumenten Geomtrie Opvragen API,
+respectievelijk voor het Wro-domein en het Omgevingswet-domein.
+
 # Omgevingsinformatie Ontsluiten
 
------Toelichtings-tekst - Nader in te vullen-----
+De Omgevingsinformatie Ontsluiten API is zoals boven toegelicht de API om
+over de twee verschillende domeinen heen (Wro en Omgevingswet) documenten met
+wet- en regelgeving te vinden. Dit kan op basis van een geo-bevraging (GeoJSON),
+via _fuzzy search_ op basis van kenmerken van het document zoals bijvoorbeeld de citeertitel,
+of op basis van de identificatie van het document, zoals het plan-id (Wro) of het Work-Id (Omgevingswet).
 
 ```mermaid
 flowchart TD
@@ -68,7 +80,7 @@ Domein --> |Omgevingswet| Ozon["Omgevingsdocumenten Presenteren API"]
 
 # Ruimtelijke Plannen
 
------Toelichtings-tekst - Nader in te vullen-----
+In de Ruimtelijke Plannen API zijn teksten, planobjecten en geometrieën op te halen uit een Ruimtelijk Plan, bijvoorbeeld een Bestemmingsplan.
 
 ```mermaid
 flowchart TD
@@ -88,7 +100,8 @@ RpVerbeelden -->|Verbeelding op de kaart| VT["OGC API Vector Tiles (PDOK)"]
 
 # Omgevingsdocumenten Presenteren
 
------Toelichtings-tekst - Nader in te vullen-----
+In de Omgevingsdocumenten Presenteren API kun je de teksten en annotaties (bijvoorbeeld Regels, Activiteiten, Gebiedsaanwijzingen) op
+te halen op basis van een specifiek Omgevingsdocument, bijvoorbeeld een Regeling of Ontwerpregeling.
 
 ```mermaid
 flowchart TD
