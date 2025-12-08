@@ -16,6 +16,17 @@ Ten bate van de bedrijfsfuncties van DSO-LV biedt de OBO Kadaster een aantal RES
 
 # Overview
 
+Wanneer je wilt weten welke wet- en regelgeving of beleidsinformatie er is vastgesteld op een bepaalde plek,
+is het niet voldoende om alleen Omgevingsdocumenten (d.w.z. documenten op basis van de Omgevingswet) te raadplegen.
+Je moet ook wet- en regelgeving op basis van de Wet ruimtelijke ordening (Wro) meenemen om een compleet beeld te hebben
+van de lokale wet- en regelgeving; gemeenten hebben namelijk nog tot en met 2031 de tijd om hun wet- en regelgeving
+over te brengen naar het Omgevingsplan.
+
+Vandaar dat het DSO een API aanbiedt om tijdens deze overgangssituatie zowel documenten uit het oude domein
+als documenten uit het nieuwe domein te kunnen vinden; dit is de Omgevingsinformatie Ontsluiten API. 
+Wanneer je als raadpleger vervolgens details nodig hebt uit een specifiek document,
+dan kun je deze opvragen in een domeinspecifieke API.
+
 -----Toelichtings-tekst - Nader in te vullen-----
 
 ```mermaid
