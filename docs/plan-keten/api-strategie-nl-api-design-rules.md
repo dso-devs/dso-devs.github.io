@@ -15,7 +15,7 @@ Binnen DSO-LV gebruiken we vastgestelde kaders voor **API-ontwerp** en **URI-sta
   uitbreiding en nuancering hiervan zijn vastgelegd in specifieke DSO architectuurdocumentatie zoals de DSO API strategie;  
 - **Versiebeheer & stabiliteit.** Developers mogen ervan uitgaan dat API's toegankelijk gemaakt worden conform afspraken vastgelegd in de NL REST API Design Rules
   en aanvullend in de DSO [URI-strategie v2.0](https://iplo.nl/publish/pages/162339/uri-strategie.pdf);
-  dit geldt in het bijzonder voor het volgen van Semantic Versioning, het naast elkaar aanbieden van verschillende versies van één API, en het in- en uitfaseren van (major versions van ) API's;
+  dit geldt in het bijzonder voor het volgen van Semantic Versioning, het naast elkaar aanbieden van verschillende versies van één API, en het in- en uitfaseren van (major versions van) API's;
 - **Vindbaarheid & documentatie.** Developers mogen ervan uitgaan dat API's en hun documentatie vindbaar zijn op developer.omgevingswet.overheid.nl en op andere openbare catalogi van API's.
 
 ## Acties **PI-36** (Q4 2025)
