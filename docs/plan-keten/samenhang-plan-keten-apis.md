@@ -139,120 +139,115 @@ Onderstaande Arazzo-specificatie TODO beschrijft een workflow, waarbij op basis 
 waarbij daarna de geometrie opgehaald wordt.
 
 ```yaml
-
-
-
-arazzo: 1.0.0
+arazzo: 1.0.1
 info:
-  title: Samenhang Plan-Keten • Amersfoort punt → Gebiedsaanwijzingen (annotaties) → Geometrie
-  version: 1.0.1
-  description: >
-    Start met een punt (RD) in Amersfoort via Omgevingsinformatie v2.
-    Haal via het Presenteren v8 annotatie-endpoint Gebiedsaanwijzingen op,
-    bepaal de geometrieIdentificatie via locatierefs → locaties,
-    en vraag de geometrie op via Geometrie Opvragen v1.
+  title: Amersfoort • Punt → Gebiedsaanwijzing (regeltekstannotaties) → Geometrie
+  version: 1.0.0
+  summary: >
+    Punt (RD) → Presenteren v8 regeltekstannotaties → Geometrie v1.
 
-servers:
-  - id: dso-prod
-    url: https://service.omgevingswet.overheid.nl
-    description: DSO-LV productie
+sourceDescriptions:
+  - name: omgevingsinformatie-v2
+    type: openapi
+    url: https://service.omgevingswet.overheid.nl/publiek/omgevingsinformatie/api/ontsluiten/v2/openapi.json
+  - name: presenteren-v8
+    type: openapi
+    url: https://service.omgevingswet.overheid.nl/publiek/omgevingsdocumenten/api/presenteren/v8/openapi.json
+  - name: geometrie-opvragen-v1
+    type: openapi
+    url: https://service.omgevingswet.overheid.nl/publiek/omgevingsdocumenten/api/geometrieopvragen/v1/openapi.json
 
-actors:
-  - id: omgevingsinformatie
-    type: api
-    name: Omgevingsinformatie Ontsluiten v2
-    baseUrl: /publiek/omgevingsinformatie/api/ontsluiten/v2         # v2 basis-URL [4](https://iplo.nl/digitaal-stelsel/aansluiten/open-data-api/)
-    security:
-      - type: apiKey
-        in: header
-        name: x-api-key
+workflows:
+  - workflowId: amersfoort-punt-naar-geometrie
+    summary: Punt → regeltekstannotaties → geometrie (met gescheiden API keys)
+    description: |
+      Stap 1: Omgevingsinformatie v2 (POST /documenten/_zoek) — Content-Crs verplicht (RD).
+      Stap 2: Presenteren v8 regeltekstannotaties — self-contained, haal via locatierefs de geometrieIdentificatie.
+      Stap 3: Geometrie Opvragen v1 (GET /geometrieen/{…}?crs=…) — crs-query verplicht (RD/EPSG:28992).
 
-  - id: presenteren
-    type: api
-    name: Omgevingsdocumenten Presenteren v8
-    baseUrl: /publiek/omgevingsdocumenten/api/presenteren/v8         # v8 basis-URL [5](https://developer.omgevingswet.overheid.nl/api-register/api/omgevingsdocument-presenteren/)
-    security:
-      - type: apiKey
-        in: header
-        name: x-api-key
+    inputs:
+      type: object
+      properties:
+        apiKeyOmgevingsinformatie:
+          type: string
+          description: API key voor Omgevingsinformatie Ontsluiten v2
+        apiKeyPresenteren:
+          type: string
+          description: API key voor Omgevingsdocumenten Presenteren v8
+        apiKeyGeometrie:
+          type: string
+          description: API key voor Geometrie Opvragen v1
 
-  - id: geometrie
-    type: api
-    name: Omgevingsdocumenten Geometrie Opvragen v1
-    baseUrl: /publiek/omgevingsdocumenten/api/geometrieopvragen/v1   # v1 basis-URL [3](https://dso-devs.github.io/docs/plan-keten/omgevingsdocumenten-geometrie-opvragen-api)
-    security:
-      - type: apiKey
-        in: header
-        name: x-api-key
+    steps:
+      - stepId: zoek-documenten-op-punt
+        description: Zoek relevante documenten op RD-punt in Amersfoort
+        operationPath: "${$sourceDescriptions.omgevingsinformatie-v2.url}#/paths/~1documenten~1_zoek/post"
+        parameters:
+          - name: x-api-key
+            in: header
+            value: "{$inputs.apiKeyOmgevingsinformatie}"
+          - name: Content-Crs
+            in: header
+            value: "http://www.opengis.net/def/crs/EPSG/0/28992"
+          - name: page
+            in: query
+            value: "1"
+          - name: size
+            in: query
+            value: "20"
+          - name: _sort
+            in: query
+            value: "sortDatum,desc"
+        requestBody:
+          contentType: application/json
+          payload:
+            geometrie:
+              type: Point
+              coordinates: [155000, 463000]
+        successCriteria:
+          - condition: $statusCode == 200
+        outputs:
+          zoekResultaat: $response.body#/
 
-workflow:
-  - id: stap1-punt-amersfoort
-    name: Zoek documenten op puntlocatie (RD) in Amersfoort
-    actor: omgevingsinformatie
-    request:
-      method: POST
-      endpoint: /documenten/_zoek                                  # geo-zoek Omgevingsinformatie v2 [6](https://iplo.nl/digitaal-stelsel/toepasbare-regels/starten/omgevingsdocumenten-annoteren-toepasbare-regels/)
-      headers:
-        Content-Type: application/json
-        Content-Crs: http://www.opengis.net/def/crs/EPSG/0/28992   # RD (Content-Crs vereist bij geo-body) [6](https://iplo.nl/digitaal-stelsel/toepasbare-regels/starten/omgevingsdocumenten-annoteren-toepasbare-regels/)
-      query:
-        page: 1
-        size: 20
-        _sort: sortDatum,desc
-      body:
-        geometrie:
-          type: Point
-          coordinates: [155000, 463000]                           # RD-voorbeeldcoördinaat (Amersfoort) [6](https://iplo.nl/digitaal-stelsel/toepasbare-regels/starten/omgevingsdocumenten-annoteren-toepasbare-regels/)
-    response:
-      save:
-        - key: zoekResultaat
-          path: $
-
-  - id: stap2-annotaties-gebiedsaanwijzingen
-    name: Haal Gebiedsaanwijzing(en) op via Presenteren v8 annotatie-endpoint
-    actor: presenteren
-    request:
-      method: POST
-      endpoint: {ANNOTATIE_ENDPOINT}                               # vul hier het annotatiepad uit v8 OpenAPI in (regeltekst/divisie) [7](https://developer.omgevingswet.overheid.nl/publish/pages/204330/ozon-api-downloadservice-v1_1.pdf)[2](https://developer.omgevingswet.overheid.nl/publish/pages/166112/omgevingsdocumenten-presenteren-v8.json)
-      headers:
-        Content-Type: application/json
-        Content-Crs: http://www.opengis.net/def/crs/EPSG/0/28992   # CRS84 (default) niet ondersteund; geef RD expliciet mee [2](https://developer.omgevingswet.overheid.nl/publish/pages/166112/omgevingsdocumenten-presenteren-v8.json)
-      body:
-        geometrie:
-          type: Point
-          coordinates: [155000, 463000]
-        # optioneel: geldigOp, inWerkingOp, beschikbaarOp, synchroniseerMetTileset
-    response:
-      save:
-        # 2a) Kies een Gebiedsaanwijzing uit de annotatie-respons (self-contained) [1](https://developer.omgevingswet.overheid.nl/publish/pages/166112/migratiehandleiding.pdf)
-        - key: eersteGebiedsaanwijzing
-          path: $.annotaties.gebiedsaanwijzingen[0]                # sleutelnaam is afhankelijk van endpoint; pas aan aan jouw payload
-        # 2b) Pak de eerste locatieIdentificatie via locatierefs (zoals je aangaf)
-        - key: locatieIdentificatie
-          path: $.annotaties.gebiedsaanwijzingen[0].locatierefs[0].locatieIdentificatie
-        # 2c) Vind in dezelfde respons het locatie-object met identiek 'identificatie'
-        #     en lees daaruit de geometrieIdentificatie (self-contained graph in v8) [1](https://developer.omgevingswet.overheid.nl/publish/pages/166112/migratiehandleiding.pdf)
-        - key: geometrieIdentificatie
-          path: $.annotaties.locaties[?(@.identificatie == ${{ locatieIdentificatie }})].geometrieIdentificatie
-
-  - id: stap3-geometrie-ophalen
-    name: Haal GeoJSON geometrie op (Geometrie Opvragen v1)
-    actor: geometrie
-    request:
-      method: GET
-      endpoint: /geometrieen/${{ geometrieIdentificatie }}        # levert GeoJSON met type + coördinaatlijst [3](https://dso-devs.github.io/docs/plan-keten/omgevingsdocumenten-geometrie-opvragen-api)
-      headers: {}
-      query:
-        crs: http://www.opengis.net/def/crs/EPSG/0/28992           # verplicht; zonder crs → 422 [3](https://dso-devs.github.io/docs/plan-keten/omgevingsdocumenten-geometrie-opvragen-api)
-    response:
-      save:
-        - key: geojson
-          path: $
-      output:
-        - name: resultaat
-          value:
-            gebiedsaanwijzing: ${{ eersteGebiedsaanwijzing }}
-            locatieIdentificatie: ${{ locatieIdentificatie }}
-            geometrie: ${{ geojson }}
-
+      - stepId: haal-annotaties-gebiedsaanwijzing
+        description: >
+          Haal Gebiedsaanwijzing(en) via Presenteren v8 regeltekstannotaties.
+          Bepaal locatieIdentificatie via locatierefs en vind geometrieIdentificatie in annotaties.locaties.
+        operationPath: "${$sourceDescriptions.presenteren-v8.url}#/paths/~1annotaties~1regeltekstannotaties~1_zoek/post"
+        parameters:
+          - name: x-api-key
+            in: header
+            value: "{$inputs.apiKeyPresenteren}"
+          - name: Content-Crs
+            in: header
+            value: "http://www.opengis.net/def/crs/EPSG/0/28992"
+        requestBody:
+          contentType: application/json
+          payload:
+            geometrie:
+              type: Point
+              coordinates: [155000, 463000]
+        successCriteria:
+          - condition: $statusCode == 200
+        outputs:
+          eersteGebiedsaanwijzing: $response.body#/annotaties/gebiedsaanwijzingen/0
+          locatieIdentificatie: $response.body#/annotaties/gebiedsaanwijzingen/0/locatierefs/0/locatieIdentificatie
+          geometrieIdentificatie: $response.body#/annotaties/locaties/0/geometrieIdentificatie
+      - stepId: haal-geojson
+        description: Haal GeoJSON voor geometrieIdentificatie (Geometrie Opvragen v1)
+        operationPath: "${$sourceDescriptions.geometrie-opvragen-v1.url}#/paths/~1geometrieen~1{geometrieIdentificatie}~1/get"
+        parameters:
+          - name: x-api-key
+            in: header
+            value: "{$inputs.apiKeyGeometrie}"
+          - name: geometrieIdentificatie
+            in: path
+            value: "{$steps.haal-annotaties-gebiedsaanwijzing.outputs.geometrieIdentificatie}"
+          - name: crs
+            in: query
+            value: "http://www.opengis.net/def/crs/EPSG/0/28992"
+        successCriteria:
+          - condition: $statusCode == 200
+        outputs:
+          geojson: $response.body#/
 ```
