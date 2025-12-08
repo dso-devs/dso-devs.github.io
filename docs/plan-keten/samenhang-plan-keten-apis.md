@@ -141,14 +141,16 @@ waarbij daarna de geometrie opgehaald wordt.
 ```yaml
 
 
+
 arazzo: 1.0.0
 info:
-  title: Samenhang Plan-Keten • Amersfoort punt → Gebiedsaanwijzingen (via annotaties) → Geometrie
-  version: 1.0.0
+  title: Samenhang Plan-Keten • Amersfoort punt → Gebiedsaanwijzingen (annotaties) → Geometrie
+  version: 1.0.1
   description: >
-    Start met een puntlocatie (RD) in Amersfoort via Omgevingsinformatie v2,
-    vraag Gebiedsaanwijzingen op via het Presenteren v8 annotatie-endpoint,
-    en haal de geometrie van één Gebiedsaanwijzing op via Geometrie Opvragen v1.
+    Start met een punt (RD) in Amersfoort via Omgevingsinformatie v2.
+    Haal via het Presenteren v8 annotatie-endpoint Gebiedsaanwijzingen op,
+    bepaal de geometrieIdentificatie via locatierefs → locaties,
+    en vraag de geometrie op via Geometrie Opvragen v1.
 
 servers:
   - id: dso-prod
@@ -159,23 +161,25 @@ actors:
   - id: omgevingsinformatie
     type: api
     name: Omgevingsinformatie Ontsluiten v2
-    baseUrl: /publiek/omgevingsinformatie/api/ontsluiten/v2         # basis-URL v2 [5](https://dso-devs.github.io/docs/plan-keten/omgevingsinformatie-ontsluiten-api)
+    baseUrl: /publiek/omgevingsinformatie/api/ontsluiten/v2         # v2 basis-URL [4](https://iplo.nl/digitaal-stelsel/aansluiten/open-data-api/)
     security:
       - type: apiKey
         in: header
         name: x-api-key
+
   - id: presenteren
     type: api
     name: Omgevingsdocumenten Presenteren v8
-    baseUrl: /publiek/omgevingsdocumenten/api/presenteren/v8         # basis-URL v8 [6](https://developer.omgevingswet.overheid.nl/api-register/api/omgevingsdocument-presenteren/)
+    baseUrl: /publiek/omgevingsdocumenten/api/presenteren/v8         # v8 basis-URL [5](https://developer.omgevingswet.overheid.nl/api-register/api/omgevingsdocument-presenteren/)
     security:
       - type: apiKey
         in: header
         name: x-api-key
+
   - id: geometrie
     type: api
     name: Omgevingsdocumenten Geometrie Opvragen v1
-    baseUrl: /publiek/omgevingsdocumenten/api/geometrieopvragen/v1   # basis-URL v1 [7](https://dso-devs.github.io/docs/plan-keten/omgevingsdocumenten-geometrie-opvragen-api)
+    baseUrl: /publiek/omgevingsdocumenten/api/geometrieopvragen/v1   # v1 basis-URL [3](https://dso-devs.github.io/docs/plan-keten/omgevingsdocumenten-geometrie-opvragen-api)
     security:
       - type: apiKey
         in: header
@@ -187,10 +191,10 @@ workflow:
     actor: omgevingsinformatie
     request:
       method: POST
-      endpoint: /documenten/_zoek                                  # geo-zoek Omgevingsinformatie v2 [5](https://dso-devs.github.io/docs/plan-keten/omgevingsinformatie-ontsluiten-api)
+      endpoint: /documenten/_zoek                                  # geo-zoek Omgevingsinformatie v2 [6](https://iplo.nl/digitaal-stelsel/toepasbare-regels/starten/omgevingsdocumenten-annoteren-toepasbare-regels/)
       headers:
         Content-Type: application/json
-        Content-Crs: http://www.opengis.net/def/crs/EPSG/0/28992   # RD vereist als Content-Crs [5](https://dso-devs.github.io/docs/plan-keten/omgevingsinformatie-ontsluiten-api)
+        Content-Crs: http://www.opengis.net/def/crs/EPSG/0/28992   # RD (Content-Crs vereist bij geo-body) [6](https://iplo.nl/digitaal-stelsel/toepasbare-regels/starten/omgevingsdocumenten-annoteren-toepasbare-regels/)
       query:
         page: 1
         size: 20
@@ -198,46 +202,48 @@ workflow:
       body:
         geometrie:
           type: Point
-          coordinates: [155000, 463000]                           # RD-voorbeeld (Amersfoort) [5](https://dso-devs.github.io/docs/plan-keten/omgevingsinformatie-ontsluiten-api)
+          coordinates: [155000, 463000]                           # RD-voorbeeldcoördinaat (Amersfoort) [6](https://iplo.nl/digitaal-stelsel/toepasbare-regels/starten/omgevingsdocumenten-annoteren-toepasbare-regels/)
     response:
       save:
         - key: zoekResultaat
           path: $
 
   - id: stap2-annotaties-gebiedsaanwijzingen
-    name: Haal Gebiedsaanwijzing(en) op via v8 annotatie-endpoint op dezelfde puntlocatie
+    name: Haal Gebiedsaanwijzing(en) op via Presenteren v8 annotatie-endpoint
     actor: presenteren
     request:
       method: POST
-      endpoint: {ANNOTATIE_ENDPOINT}                               # VUL IN: endpoint voor regeltekst-/divisie-annotaties (v8) [1](https://developer.omgevingswet.overheid.nl/publish/pages/166112/migratiehandleiding.pdf)[3](https://developer.omgevingswet.overheid.nl/publish/pages/166112/functionele-documentatie-api-omgevingsdocumenten-presenteren-v8-16-april-2025.pdf)
+      endpoint: {ANNOTATIE_ENDPOINT}                               # vul hier het annotatiepad uit v8 OpenAPI in (regeltekst/divisie) [7](https://developer.omgevingswet.overheid.nl/publish/pages/204330/ozon-api-downloadservice-v1_1.pdf)[2](https://developer.omgevingswet.overheid.nl/publish/pages/166112/omgevingsdocumenten-presenteren-v8.json)
       headers:
         Content-Type: application/json
-        Content-Crs: http://www.opengis.net/def/crs/EPSG/0/28992   # CRS84 wordt niet ondersteund; geef RD mee [4](https://developer.omgevingswet.overheid.nl/publish/pages/166112/omgevingsdocumenten-presenteren-v8.json)
-      # Veel annotatie-endpoints ondersteunen tijdreis-parameters zoals geldigOp/inWerkingOp/beschikbaarOp en synchroniseerMetTileset.
-      # Voeg ze hier desgewenst toe; zie v8 spec. [4](https://developer.omgevingswet.overheid.nl/publish/pages/166112/omgevingsdocumenten-presenteren-v8.json)
+        Content-Crs: http://www.opengis.net/def/crs/EPSG/0/28992   # CRS84 (default) niet ondersteund; geef RD expliciet mee [2](https://developer.omgevingswet.overheid.nl/publish/pages/166112/omgevingsdocumenten-presenteren-v8.json)
       body:
         geometrie:
           type: Point
           coordinates: [155000, 463000]
-        # Afhankelijk van het gekozen annotatie-endpoint kun je ook filteren op artikel of documentcomponent.
-        # Zie de functionele documentatie voor schema's en filters. [3](https://developer.omgevingswet.overheid.nl/publish/pages/166112/functionele-documentatie-api-omgevingsdocumenten-presenteren-v8-16-april-2025.pdf)
+        # optioneel: geldigOp, inWerkingOp, beschikbaarOp, synchroniseerMetTileset
     response:
       save:
-        # NB: de annotatie-respons in v8 is self-contained en bevat OW-objecten zoals Gebiedsaanwijzing(en) inclusief relaties. [1](https://developer.omgevingswet.overheid.nl/publish/pages/166112/migratiehandleiding.pdf)
+        # 2a) Kies een Gebiedsaanwijzing uit de annotatie-respons (self-contained) [1](https://developer.omgevingswet.overheid.nl/publish/pages/166112/migratiehandleiding.pdf)
         - key: eersteGebiedsaanwijzing
-          path: $.annotaties.gebiedsaanwijzingen[0]                # PAS AAN naar de feitelijke sleutel in jouw endpoint-respons
+          path: $.annotaties.gebiedsaanwijzingen[0]                # sleutelnaam is afhankelijk van endpoint; pas aan aan jouw payload
+        # 2b) Pak de eerste locatieIdentificatie via locatierefs (zoals je aangaf)
+        - key: locatieIdentificatie
+          path: $.annotaties.gebiedsaanwijzingen[0].locatierefs[0].locatieIdentificatie
+        # 2c) Vind in dezelfde respons het locatie-object met identiek 'identificatie'
+        #     en lees daaruit de geometrieIdentificatie (self-contained graph in v8) [1](https://developer.omgevingswet.overheid.nl/publish/pages/166112/migratiehandleiding.pdf)
         - key: geometrieIdentificatie
-          path: $.annotaties.gebiedsaanwijzingen[0].werkingsgebied.locaties[0].geometrieIdentificatie
+          path: $.annotaties.locaties[?(@.identificatie == ${{ locatieIdentificatie }})].geometrieIdentificatie
 
   - id: stap3-geometrie-ophalen
-    name: Haal GeoJSON geometrie op voor geselecteerde Gebiedsaanwijzing
+    name: Haal GeoJSON geometrie op (Geometrie Opvragen v1)
     actor: geometrie
     request:
       method: GET
-      endpoint: /geometrieen/${{ geometrieIdentificatie }}        # id → GeoJSON [7](https://dso-devs.github.io/docs/plan-keten/omgevingsdocumenten-geometrie-opvragen-api)
+      endpoint: /geometrieen/${{ geometrieIdentificatie }}        # levert GeoJSON met type + coördinaatlijst [3](https://dso-devs.github.io/docs/plan-keten/omgevingsdocumenten-geometrie-opvragen-api)
       headers: {}
       query:
-        crs: http://www.opengis.net/def/crs/EPSG/0/28992           # verplicht; anders 422 [7](https://dso-devs.github.io/docs/plan-keten/omgevingsdocumenten-geometrie-opvragen-api)
+        crs: http://www.opengis.net/def/crs/EPSG/0/28992           # verplicht; zonder crs → 422 [3](https://dso-devs.github.io/docs/plan-keten/omgevingsdocumenten-geometrie-opvragen-api)
     response:
       save:
         - key: geojson
@@ -246,7 +252,7 @@ workflow:
         - name: resultaat
           value:
             gebiedsaanwijzing: ${{ eersteGebiedsaanwijzing }}
-
+            locatieIdentificatie: ${{ locatieIdentificatie }}
+            geometrie: ${{ geojson }}
 
 ```
-
