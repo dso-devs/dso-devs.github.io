@@ -135,7 +135,7 @@ In de Omgevingsdocumenten Geometrie Opvragen API kan vervolgens de geometrie (Ge
 
 # Voorbeeldflow op basis van Arazzo
 
-Onderstaande Arazzo-specificatie TODO beschrijft een workflow, waarbij op basis van een puntlocatie een document gevonden wordt, en vervolgens een gebiedsaanwijzing (annotatie) uit dat document opgehaald wordt,
+Onderstaande [Arazzo-specificatie](https://www.openapis.org/arazzo-specification) beschrijft een workflow, waarbij op basis van een puntlocatie een document gevonden wordt, en vervolgens een gebiedsaanwijzing (annotatie) uit dat document opgehaald wordt,
 waarbij daarna de geometrie opgehaald wordt.
 
 ```yaml
