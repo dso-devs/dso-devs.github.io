@@ -51,7 +51,7 @@ Wil je deze verbeelden, bijvoorbeeld om een kaartbeeld te tonen in een browser,
 dan is het verstandig om de OGC API Vector Tiles te gebruiken.
 Wil je zelf beschikking hebben over de bron-geometrie, bijvoorbeeld omdat je hier
 databewerking op wilt doen, dan is het verstandig om geometrieën (GeoJSON)
-op te halen uit de Ruimtelijke Plannen Opvragen API of de Omgevingsdocumenten Geomtrie Opvragen API,
+op te halen uit de Ruimtelijke Plannen Opvragen API of de Omgevingsdocumenten Geometrie Opvragen API,
 respectievelijk voor het Wro-domein en het Omgevingswet-domein.
 
 # Omgevingsinformatie Ontsluiten
