@@ -27,7 +27,9 @@ als documenten uit het nieuwe domein te kunnen vinden; dit is de Omgevingsinform
 Wanneer je als raadpleger vervolgens details nodig hebt uit een specifiek document,
 dan kun je deze opvragen in een domeinspecifieke API.
 
------Toelichtings-tekst - Nader in te vullen-----
+Hieronder zie je welk soort API's je allemaal tegenkomt in een typische workflow,
+waarbij je begint met een algemene vraag en uitkomt bij een specifieke geometrie,
+bijvoorbeeld het werkingsgebied van een regel:
 
 ```mermaid
 flowchart TD
