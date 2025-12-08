@@ -129,4 +129,124 @@ Verbeelden --> |Bron-geometrie| Geo["Omgevingsdocumenten Geometrie Opvragen API"
 Verbeelden -->|Verbeelding op de kaart| VT["OGC API Vector Tiles (PDOK)"]
 ```
 
+# Omgevingsdocumenten Geometrie Opvragen
+
+In de Omgevingsdocumenten Geometrie Opvragen API kan vervolgens de geometrie (GeoJSON) opgehaald worden bij specifieke objecten uit de Omgevingsdocumenten Presenteren API.
+
+# Voorbeeldflow op basis van Arazzo
+
+Onderstaande Arazzo-specificatie TODO beschrijft een workflow, waarbij op basis van een puntlocatie een document gevonden wordt, en vervolgens een gebiedsaanwijzing (annotatie) uit dat document opgehaald wordt,
+waarbij daarna de geometrie opgehaald wordt.
+
+```yaml
+
+
+arazzo: 1.0.0
+info:
+  title: Samenhang Plan-Keten • Amersfoort punt → Gebiedsaanwijzingen (via annotaties) → Geometrie
+  version: 1.0.0
+  description: >
+    Start met een puntlocatie (RD) in Amersfoort via Omgevingsinformatie v2,
+    vraag Gebiedsaanwijzingen op via het Presenteren v8 annotatie-endpoint,
+    en haal de geometrie van één Gebiedsaanwijzing op via Geometrie Opvragen v1.
+
+servers:
+  - id: dso-prod
+    url: https://service.omgevingswet.overheid.nl
+    description: DSO-LV productie
+
+actors:
+  - id: omgevingsinformatie
+    type: api
+    name: Omgevingsinformatie Ontsluiten v2
+    baseUrl: /publiek/omgevingsinformatie/api/ontsluiten/v2         # basis-URL v2 [5](https://dso-devs.github.io/docs/plan-keten/omgevingsinformatie-ontsluiten-api)
+    security:
+      - type: apiKey
+        in: header
+        name: x-api-key
+  - id: presenteren
+    type: api
+    name: Omgevingsdocumenten Presenteren v8
+    baseUrl: /publiek/omgevingsdocumenten/api/presenteren/v8         # basis-URL v8 [6](https://developer.omgevingswet.overheid.nl/api-register/api/omgevingsdocument-presenteren/)
+    security:
+      - type: apiKey
+        in: header
+        name: x-api-key
+  - id: geometrie
+    type: api
+    name: Omgevingsdocumenten Geometrie Opvragen v1
+    baseUrl: /publiek/omgevingsdocumenten/api/geometrieopvragen/v1   # basis-URL v1 [7](https://dso-devs.github.io/docs/plan-keten/omgevingsdocumenten-geometrie-opvragen-api)
+    security:
+      - type: apiKey
+        in: header
+        name: x-api-key
+
+workflow:
+  - id: stap1-punt-amersfoort
+    name: Zoek documenten op puntlocatie (RD) in Amersfoort
+    actor: omgevingsinformatie
+    request:
+      method: POST
+      endpoint: /documenten/_zoek                                  # geo-zoek Omgevingsinformatie v2 [5](https://dso-devs.github.io/docs/plan-keten/omgevingsinformatie-ontsluiten-api)
+      headers:
+        Content-Type: application/json
+        Content-Crs: http://www.opengis.net/def/crs/EPSG/0/28992   # RD vereist als Content-Crs [5](https://dso-devs.github.io/docs/plan-keten/omgevingsinformatie-ontsluiten-api)
+      query:
+        page: 1
+        size: 20
+        _sort: sortDatum,desc
+      body:
+        geometrie:
+          type: Point
+          coordinates: [155000, 463000]                           # RD-voorbeeld (Amersfoort) [5](https://dso-devs.github.io/docs/plan-keten/omgevingsinformatie-ontsluiten-api)
+    response:
+      save:
+        - key: zoekResultaat
+          path: $
+
+  - id: stap2-annotaties-gebiedsaanwijzingen
+    name: Haal Gebiedsaanwijzing(en) op via v8 annotatie-endpoint op dezelfde puntlocatie
+    actor: presenteren
+    request:
+      method: POST
+      endpoint: {ANNOTATIE_ENDPOINT}                               # VUL IN: endpoint voor regeltekst-/divisie-annotaties (v8) [1](https://developer.omgevingswet.overheid.nl/publish/pages/166112/migratiehandleiding.pdf)[3](https://developer.omgevingswet.overheid.nl/publish/pages/166112/functionele-documentatie-api-omgevingsdocumenten-presenteren-v8-16-april-2025.pdf)
+      headers:
+        Content-Type: application/json
+        Content-Crs: http://www.opengis.net/def/crs/EPSG/0/28992   # CRS84 wordt niet ondersteund; geef RD mee [4](https://developer.omgevingswet.overheid.nl/publish/pages/166112/omgevingsdocumenten-presenteren-v8.json)
+      # Veel annotatie-endpoints ondersteunen tijdreis-parameters zoals geldigOp/inWerkingOp/beschikbaarOp en synchroniseerMetTileset.
+      # Voeg ze hier desgewenst toe; zie v8 spec. [4](https://developer.omgevingswet.overheid.nl/publish/pages/166112/omgevingsdocumenten-presenteren-v8.json)
+      body:
+        geometrie:
+          type: Point
+          coordinates: [155000, 463000]
+        # Afhankelijk van het gekozen annotatie-endpoint kun je ook filteren op artikel of documentcomponent.
+        # Zie de functionele documentatie voor schema's en filters. [3](https://developer.omgevingswet.overheid.nl/publish/pages/166112/functionele-documentatie-api-omgevingsdocumenten-presenteren-v8-16-april-2025.pdf)
+    response:
+      save:
+        # NB: de annotatie-respons in v8 is self-contained en bevat OW-objecten zoals Gebiedsaanwijzing(en) inclusief relaties. [1](https://developer.omgevingswet.overheid.nl/publish/pages/166112/migratiehandleiding.pdf)
+        - key: eersteGebiedsaanwijzing
+          path: $.annotaties.gebiedsaanwijzingen[0]                # PAS AAN naar de feitelijke sleutel in jouw endpoint-respons
+        - key: geometrieIdentificatie
+          path: $.annotaties.gebiedsaanwijzingen[0].werkingsgebied.locaties[0].geometrieIdentificatie
+
+  - id: stap3-geometrie-ophalen
+    name: Haal GeoJSON geometrie op voor geselecteerde Gebiedsaanwijzing
+    actor: geometrie
+    request:
+      method: GET
+      endpoint: /geometrieen/${{ geometrieIdentificatie }}        # id → GeoJSON [7](https://dso-devs.github.io/docs/plan-keten/omgevingsdocumenten-geometrie-opvragen-api)
+      headers: {}
+      query:
+        crs: http://www.opengis.net/def/crs/EPSG/0/28992           # verplicht; anders 422 [7](https://dso-devs.github.io/docs/plan-keten/omgevingsdocumenten-geometrie-opvragen-api)
+    response:
+      save:
+        - key: geojson
+          path: $
+      output:
+        - name: resultaat
+          value:
+            gebiedsaanwijzing: ${{ eersteGebiedsaanwijzing }}
+
+
+```
 
