@@ -208,16 +208,20 @@ workflows:
           - condition: $statusCode == 200
         outputs:
           zoekResultaat: $response.body#/
+          uriIdentificatie: $response.body#/_embedded/documenten/0/uriIdentificatie
 
       - stepId: haal-annotaties-gebiedsaanwijzing
         description: >
           Haal Gebiedsaanwijzing(en) via Presenteren v8 regeltekstannotaties.
           Bepaal locatieIdentificatie via locatierefs en vind geometrieIdentificatie in annotaties.locaties.
-        operationPath: "${$sourceDescriptions.presenteren-v8.url}#/paths/~1annotaties~1regeltekstannotaties~1_zoek/post"
+        operationPath: "${$sourceDescriptions.presenteren-v8.url}        #/paths/~1regelingen~1{uriIdentificatie}~1regeltekstannotaties~1_zoek/post"
         parameters:
           - name: x-api-key
             in: header
             value: "{$inputs.apiKeyPresenteren}"
+                  - name: uriIdentificatie
+                    in: path
+                    value: "{$steps.zoek-documenten-op-punt.outputs.uriIdentificatie}"
           - name: Content-Crs
             in: header
             value: "http://www.opengis.net/def/crs/EPSG/0/28992"
@@ -235,7 +239,7 @@ workflows:
           geometrieIdentificatie: $response.body#/annotaties/locaties/0/geometrieIdentificatie
       - stepId: haal-geojson
         description: Haal GeoJSON voor geometrieIdentificatie (Geometrie Opvragen v1)
-        operationPath: "${$sourceDescriptions.geometrie-opvragen-v1.url}#/paths/~1geometrieen~1{geometrieIdentificatie}~1/get"
+        operationPath: "${$sourceDescriptions.geometrie-opvragen-v1.url}#/paths/~1geometrieen~1{geometrieIdentificatie}/get"
         parameters:
           - name: x-api-key
             in: header
